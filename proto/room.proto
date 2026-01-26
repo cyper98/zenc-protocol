@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+package zenc.protocol;
+
+import "common.proto";
+import "participant.proto";
+
+option go_package = "github.com/aminofox/zenc-protocol/go/protocol";
+
+// Room represents a streaming session
+message Room {
+  string id = 1;
+  string name = 2;
+  int32 max_users = 3;
+  int64 created_at = 4;
+  string zone = 5;
+  map<string, string> metadata = 6;
+  int32 participant_count = 7;
+}
+
+// CreateRoomRequest creates a new room
+message CreateRoomRequest {
+  string name = 1;
+  int32 max_users = 2;
+  string zone = 3;
+  map<string, string> metadata = 4;
+}
+
+// CreateRoomResponse returns the created room
+message CreateRoomResponse {
+  Room room = 1;
+  Error error = 2;
+}
+
+// GetRoomRequest retrieves room information
+message GetRoomRequest {
+  string room_id = 1;
+}
+
+// GetRoomResponse returns room information
+message GetRoomResponse {
+  Room room = 1;
+  Error error = 2;
+}
+
+// ListRoomsRequest lists all rooms
+message ListRoomsRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+  string zone = 3;
+}
+
+// ListRoomsResponse returns a list of rooms
+message ListRoomsResponse {
+  repeated Room rooms = 1;
+  int32 total = 2;
+  Error error = 3;
+}
+
+// DeleteRoomRequest deletes a room
+message DeleteRoomRequest {
+  string room_id = 1;
+}
+
+// DeleteRoomResponse confirms room deletion
+message DeleteRoomResponse {
+  bool success = 1;
+  Error error = 2;
+}
+
+// JoinRoomRequest joins a room
+message JoinRoomRequest {
+  string room_id = 1;
+  string user_id = 2;
+  RoomRole role = 3;
+  map<string, string> metadata = 4;
+}
+
+// JoinRoomResponse returns join confirmation
+message JoinRoomResponse {
+  string participant_id = 1;
+  Room room = 2;
+  repeated Participant participants = 3;
+  Error error = 4;
+}
+
+// LeaveRoomRequest leaves a room
+message LeaveRoomRequest {
+  string room_id = 1;
+  string participant_id = 2;
+}
+
+// LeaveRoomResponse confirms leaving
+message LeaveRoomResponse {
+  bool success = 1;
+  Error error = 2;
+}
+
+// RoomEvent is emitted when room state changes
+message RoomEvent {
+  enum EventType {
+    EVENT_TYPE_UNSPECIFIED = 0;
+    EVENT_TYPE_CREATED = 1;
+    EVENT_TYPE_DELETED = 2;
+    EVENT_TYPE_UPDATED = 3;
+  }
+  
+  EventType type = 1;
+  Room room = 2;
+  int64 timestamp = 3;
+}

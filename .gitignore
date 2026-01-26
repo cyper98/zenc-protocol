@@ -1,0 +1,32 @@
+# Generated code
+generated/go/**
+generated/typescript/**
+generated/python/**
+
+# Keep directories
+!generated/go/.gitkeep
+!generated/typescript/.gitkeep
+!generated/python/.gitkeep
+
+# Go
+*.so
+*.dylib
+*.dll
+*.exe
+*.test
+*.out
+go.work
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

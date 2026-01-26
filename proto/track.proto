@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+package zenc.protocol;
+
+import "common.proto";
+
+option go_package = "github.com/aminofox/zenc-protocol/go/protocol";
+
+// Track represents a media track
+message Track {
+  string id = 1;
+  string participant_id = 2;
+  TrackKind kind = 3;
+  TrackSource source = 4;
+  TrackStatus status = 5;
+  QualityLevel quality = 6;
+  map<string, string> metadata = 7;
+}
+
+// PublishTrackRequest publishes a track
+message PublishTrackRequest {
+  string participant_id = 1;
+  Track track = 2;
+  string sdp_offer = 3;
+}
+
+// PublishTrackResponse returns publish confirmation
+message PublishTrackResponse {
+  string track_id = 1;
+  string sdp_answer = 2;
+  Error error = 3;
+}
+
+// UnpublishTrackRequest unpublishes a track
+message UnpublishTrackRequest {
+  string track_id = 1;
+  string participant_id = 2;
+}
+
+// UnpublishTrackResponse confirms unpublish
+message UnpublishTrackResponse {
+  bool success = 1;
+  Error error = 2;
+}
+
+// SubscribeTrackRequest subscribes to a track
+message SubscribeTrackRequest {
+  string participant_id = 1;
+  string track_id = 2;
+  QualityLevel quality = 3;
+}
+
+// SubscribeTrackResponse returns subscription details
+message SubscribeTrackResponse {
+  string sdp_offer = 1;
+  Error error = 2;
+}
+
+// UnsubscribeTrackRequest unsubscribes from a track
+message UnsubscribeTrackRequest {
+  string participant_id = 1;
+  string track_id = 2;
+}
+
+// UnsubscribeTrackResponse confirms unsubscribe
+message UnsubscribeTrackResponse {
+  bool success = 1;
+  Error error = 2;
+}
+
+// HoldTrackRequest pauses a track
+message HoldTrackRequest {
+  string track_id = 1;
+}
+
+// HoldTrackResponse confirms hold
+message HoldTrackResponse {
+  bool success = 1;
+  Error error = 2;
+}
+
+// ResumeTrackRequest resumes a track
+message ResumeTrackRequest {
+  string track_id = 1;
+}
+
+// ResumeTrackResponse confirms resume
+message ResumeTrackResponse {
+  bool success = 1;
+  Error error = 2;
+}
+
+// ICECandidate represents a WebRTC ICE candidate
+message ICECandidate {
+  string candidate = 1;
+  string sdp_mid = 2;
+  int32 sdp_m_line_index = 3;
+  string track_id = 4;
+}
+
+// ICECandidateMessage sends an ICE candidate
+message ICECandidateMessage {
+  string participant_id = 1;
+  ICECandidate candidate = 2;
+}
+
+// TrackEvent is emitted when track state changes
+message TrackEvent {
+  enum EventType {
+    EVENT_TYPE_UNSPECIFIED = 0;
+    EVENT_TYPE_PUBLISHED = 1;
+    EVENT_TYPE_UNPUBLISHED = 2;
+    EVENT_TYPE_SUBSCRIBED = 3;
+    EVENT_TYPE_UNSUBSCRIBED = 4;
+    EVENT_TYPE_HELD = 5;
+    EVENT_TYPE_RESUMED = 6;
+    EVENT_TYPE_QUALITY_CHANGED = 7;
+  }
+  
+  EventType type = 1;
+  Track track = 2;
+  int64 timestamp = 3;
+}

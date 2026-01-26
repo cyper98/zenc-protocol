@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package zenc.protocol;
+
+import "common.proto";
+import "room.proto";
+import "participant.proto";
+import "track.proto";
+
+option go_package = "github.com/aminofox/zenc-protocol/go/protocol";
+
+// SignalingMessage wraps all WebSocket messages
+message SignalingMessage {
+  string type = 1;
+  oneof payload {
+    // Room messages
+    JoinRoomRequest join_room = 10;
+    JoinRoomResponse room_joined = 11;
+    LeaveRoomRequest leave_room = 12;
+    LeaveRoomResponse room_left = 13;
+    
+    // Track messages
+    PublishTrackRequest publish_track = 20;
+    PublishTrackResponse track_published = 21;
+    UnpublishTrackRequest unpublish_track = 22;
+    UnpublishTrackResponse track_unpublished = 23;
+    SubscribeTrackRequest subscribe_track = 24;
+    SubscribeTrackResponse track_subscribed = 25;
+    UnsubscribeTrackRequest unsubscribe_track = 26;
+    UnsubscribeTrackResponse track_unsubscribed = 27;
+    HoldTrackRequest hold_track = 28;
+    HoldTrackResponse track_held = 29;
+    ResumeTrackRequest resume_track = 30;
+    ResumeTrackResponse track_resumed = 31;
+    
+    // ICE messages
+    ICECandidateMessage ice_candidate = 40;
+    
+    // Events
+    ParticipantEvent participant_event = 50;
+    TrackEvent track_event = 51;
+    RoomEvent room_event = 52;
+    
+    // Error
+    Error error = 99;
+  }
+}
+
+// PingRequest for keep-alive
+message PingRequest {
+  int64 timestamp = 1;
+}
+
+// PongResponse for keep-alive
+message PongResponse {
+  int64 timestamp = 1;
+}

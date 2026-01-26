@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package zenc.protocol;
+
+import "common.proto";
+
+option go_package = "github.com/aminofox/zenc-protocol/go/protocol";
+
+// Participant represents a user in a room
+message Participant {
+  string id = 1;
+  string room_id = 2;
+  string user_id = 3;
+  RoomRole role = 4;
+  int64 joined_at = 5;
+  map<string, string> metadata = 6;
+  ConnectionQuality connection_quality = 7;
+}
+
+// ListParticipantsRequest lists participants in a room
+message ListParticipantsRequest {
+  string room_id = 1;
+}
+
+// ListParticipantsResponse returns participants
+message ListParticipantsResponse {
+  repeated Participant participants = 1;
+  Error error = 2;
+}
+
+// GetParticipantRequest retrieves participant info
+message GetParticipantRequest {
+  string participant_id = 1;
+}
+
+// GetParticipantResponse returns participant info
+message GetParticipantResponse {
+  Participant participant = 1;
+  Error error = 2;
+}
+
+// UpdateParticipantRequest updates participant data
+message UpdateParticipantRequest {
+  string participant_id = 1;
+  RoomRole role = 2;
+  map<string, string> metadata = 3;
+}
+
+// UpdateParticipantResponse confirms update
+message UpdateParticipantResponse {
+  Participant participant = 1;
+  Error error = 2;
+}
+
+// ParticipantEvent is emitted when participant state changes
+message ParticipantEvent {
+  enum EventType {
+    EVENT_TYPE_UNSPECIFIED = 0;
+    EVENT_TYPE_JOINED = 1;
+    EVENT_TYPE_LEFT = 2;
+    EVENT_TYPE_UPDATED = 3;
+    EVENT_TYPE_CONNECTION_QUALITY_CHANGED = 4;
+  }
+  
+  EventType type = 1;
+  Participant participant = 2;
+  int64 timestamp = 3;
+}
