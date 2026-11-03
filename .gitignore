@@ -1,7 +1,8 @@
-# Generated code
-generated/go/**
-generated/typescript/**
-generated/python/**
+# Generated code is tracked so downstream repositories and CI can import
+# github.com/cyper98/zenc-protocol/generated/go without needing local protoc
+# generated/go/**
+# generated/typescript/**
+# generated/python/**
 
 # Keep directories
 !generated/go/.gitkeep
@@ -30,3 +31,5 @@ Thumbs.db
 
 # Logs
 *.log
+
+node_modules/

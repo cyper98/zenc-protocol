@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package zenc.protocol;
 
-option go_package = "github.com/aminofox/zenc-protocol/go/protocol";
+option go_package = "github.com/cyper98/zenc-protocol/go/protocol";
 
 // Common enums and types used across all protocol messages
 

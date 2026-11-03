@@ -4,7 +4,7 @@ package zenc.protocol;
 
 import "common.proto";
 
-option go_package = "github.com/aminofox/zenc-protocol/go/protocol";
+option go_package = "github.com/cyper98/zenc-protocol/go/protocol";
 
 // Track represents a media track
 message Track {

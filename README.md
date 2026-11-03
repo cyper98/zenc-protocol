@@ -74,7 +74,7 @@ make generate-python
 
 ```go
 import (
-    pb "github.com/aminofox/zenc-protocol/go/protocol"
+    pb "github.com/cyper98/zenc-protocol/go/protocol"
 )
 
 // Create a join room request
@@ -212,7 +212,7 @@ package zenc.protocol;
 
 import "common.proto";
 
-option go_package = "github.com/aminofox/zenc-protocol/go/protocol";
+option go_package = "github.com/cyper98/zenc-protocol/go/protocol";
 
 message CustomMessage {
   string id = 1;

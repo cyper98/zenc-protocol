@@ -5,7 +5,7 @@ package zenc.protocol;
 import "common.proto";
 import "participant.proto";
 
-option go_package = "github.com/aminofox/zenc-protocol/go/protocol";
+option go_package = "github.com/cyper98/zenc-protocol/go/protocol";
 
 // Room represents a streaming session
 message Room {

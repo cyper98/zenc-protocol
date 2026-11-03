@@ -1,0 +1,22 @@
+{
+  "name": "zenc-protocol",
+  "version": "1.0.0",
+  "description": "Protocol definitions and message schemas for the Zenc livestreaming ecosystem.",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@cyper98:cyper98/zenc-protocol.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-proto": "^2.18.3"
+  }
+}

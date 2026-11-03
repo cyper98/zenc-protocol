@@ -54,13 +54,22 @@ protoc \
 
 echo -e "${GREEN}✓ Go code generated${NC}"
 
-# Generate TypeScript code (if ts-proto is available)
-if command -v protoc-gen-ts &> /dev/null; then
-    echo -e "${GREEN}Generating TypeScript code...${NC}"
+# Generate TypeScript code
+TS_PROTO_PLUGIN=""
+if [ -f "${SCRIPT_DIR}/../node_modules/.bin/protoc-gen-ts_proto" ]; then
+    TS_PROTO_PLUGIN="${SCRIPT_DIR}/../node_modules/.bin/protoc-gen-ts_proto"
+elif command -v protoc-gen-ts_proto &> /dev/null; then
+    TS_PROTO_PLUGIN="$(command -v protoc-gen-ts_proto)"
+elif command -v protoc-gen-ts &> /dev/null; then
+    TS_PROTO_PLUGIN="$(command -v protoc-gen-ts)"
+fi
+
+if [ -n "${TS_PROTO_PLUGIN}" ]; then
+    echo -e "${GREEN}Generating TypeScript code using ${TS_PROTO_PLUGIN}...${NC}"
     protoc \
         --proto_path="${PROTO_DIR}" \
-        --plugin=protoc-gen-ts \
-        --ts_out="${OUTPUT_DIR}/typescript" \
+        --plugin="${TS_PROTO_PLUGIN}" \
+        --ts_proto_out="${OUTPUT_DIR}/typescript" \
         "${PROTO_DIR}"/*.proto
     echo -e "${GREEN}✓ TypeScript code generated${NC}"
 else

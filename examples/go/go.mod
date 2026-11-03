@@ -2,8 +2,6 @@ module example
 
 go 1.25.6
 
-replace github.com/aminofox/zenc-protocol => ../..
+require github.com/cyper98/zenc-protocol v0.1.0
 
-require github.com/aminofox/zenc-protocol v0.0.0-00010101000000-000000000000
-
-require google.golang.org/protobuf v1.32.0 // indirect
+require google.golang.org/protobuf v1.36.9 // indirect

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	pb "github.com/aminofox/zenc-protocol/generated/go"
+	pb "github.com/cyper98/zenc-protocol/generated/go"
 )
 
 func main() {
